@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zmk editing reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --border: #2a2a2a;
+    --accent: #e8ff00;
+    --accent2: #00d4ff;
+    --accent3: #ff4d6d;
+    --text: #e0e0e0;
+    --muted: #666;
+    --key-bg: #1e1e1e;
+    --key-border: #333;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 32px 24px;
+  }
+
+  header {
+    border-left: 3px solid var(--accent2);
+    padding-left: 16px;
+    margin-bottom: 32px;
+  }
+
+  header h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent2);
+    letter-spacing: -0.5px;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .card.full { grid-column: 1 / -1; }
+
+  .card-header {
+    padding: 10px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-header .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .c1 .dot { background: var(--accent2); }
+  .c2 .dot { background: var(--accent); }
+  .c3 .dot { background: var(--accent3); }
+  .c4 .dot { background: #a855f7; }
+  .c5 .dot { background: #f97316; }
+  .c6 .dot { background: #22c55e; }
+  .c7 .dot { background: #eab308; }
+  .c8 .dot { background: #ec4899; }
+
+  .card-body { padding: 12px 14px; }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  tr:not(:last-child) td { border-bottom: 1px solid #1c1c1c; }
+
+  td { padding: 6px 0; vertical-align: top; }
+  td:first-child { width: 44%; padding-right: 12px; }
+
+  .code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    background: #0a1a20;
+    border: 1px solid #1a3a4a;
+    border-radius: 3px;
+    padding: 1px 5px;
+    white-space: nowrap;
+  }
+
+  .code.yellow { color: var(--accent); background: #1a1a00; border-color: #3a3a00; }
+  .code.red { color: var(--accent3); background: #1a0008; border-color: #3a0015; }
+  .code.purple { color: #c084fc; background: #150a20; border-color: #2d1a40; }
+  .code.orange { color: #fb923c; background: #1a0e00; border-color: #3a1e00; }
+  .code.green { color: #4ade80; background: #001a0a; border-color: #003a15; }
+  .code.pink { color: #f472b6; background: #1a0010; border-color: #3a0025; }
+
+  .desc { color: var(--text); font-size: 12px; }
+  .sub { color: var(--muted); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+
+  .section-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 0 4px;
+    border-top: 1px solid var(--border);
+    margin-top: 6px;
+  }
+
+  .section-title:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+
+  .codeblock {
+    background: #111;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 3px;
+    padding: 10px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #ccc;
+    white-space: pre;
+    overflow-x: auto;
+    margin-top: 8px;
+    line-height: 1.7;
+  }
+
+  .codeblock .cm { color: var(--muted); }
+  .codeblock .kw { color: var(--accent2); }
+  .codeblock .val { color: var(--accent); }
+  .codeblock .str { color: var(--accent3); }
+  .codeblock .fn { color: #c084fc; }
+
+  .note {
+    background: #0f1a10;
+    border: 1px solid #1e3a20;
+    border-left: 3px solid #4ade80;
+    border-radius: 3px;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .warn {
+    background: #1a0f00;
+    border: 1px solid #3a2000;
+    border-left: 3px solid #fb923c;
+    border-radius: 3px;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+
+  footer {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>zmk editing reference</h1>
+  <p>behaviors · key codes · combos · layers · bindings</p>
+</header>
+
+<div class="grid">
+
+  <!-- BEHAVIORS OVERVIEW -->
+  <div class="card">
+    <div class="card-header c1"><span class="dot"></span> core behaviors</div>
+    <div class="card-body">
+      <p class="section-title">what the & means</p>
+      <p class="desc" style="color:var(--muted);font-size:12px;margin-bottom:8px;">every binding starts with <span class="code">&amp;</span> — it references a behavior node defined in the firmware.</p>
+      <table>
+        <tr><td><span class="code">&amp;kp KEY</span></td><td class="desc">key press — sends a keycode<br><span class="sub">most common binding</span></td></tr>
+        <tr><td><span class="code">&amp;mo LAYER</span></td><td class="desc">momentary layer — active while held</td></tr>
+        <tr><td><span class="code">&amp;lt LAYER KEY</span></td><td class="desc">layer-tap — tap=key, hold=layer</td></tr>
+        <tr><td><span class="code">&amp;mt MOD KEY</span></td><td class="desc">mod-tap — tap=key, hold=modifier</td></tr>
+        <tr><td><span class="code">&amp;to LAYER</span></td><td class="desc">to layer — switches default layer</td></tr>
+        <tr><td><span class="code">&amp;tog LAYER</span></td><td class="desc">toggle layer on/off</td></tr>
+        <tr><td><span class="code">&amp;sl LAYER</span></td><td class="desc">sticky layer — next key uses layer</td></tr>
+        <tr><td><span class="code">&amp;sk MOD</span></td><td class="desc">sticky key — mod applies to next key only</td></tr>
+        <tr><td><span class="code">&amp;trans</span></td><td class="desc">transparent — falls through to layer below</td></tr>
+        <tr><td><span class="code">&amp;none</span></td><td class="desc">blocked — does nothing, stops fall-through</td></tr>
+        <tr><td><span class="code">&amp;caps_word</span></td><td class="desc">caps word — capitalizes until non-alpha</td></tr>
+        <tr><td><span class="code">&amp;key_repeat</span></td><td class="desc">repeats last pressed key</td></tr>
+        <tr><td><span class="code">&amp;bootloader</span></td><td class="desc">enter bootloader / flash mode</td></tr>
+        <tr><td><span class="code">&amp;sys_reset</span></td><td class="desc">reset the firmware</td></tr>
+        <tr><td><span class="code">&amp;soft_off</span></td><td class="desc">power off (hold-time configurable)</td></tr>
+        <tr><td><span class="code">&amp;studio_unlock</span></td><td class="desc">unlock zmk studio live editing</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- KP KEYCODES -->
+  <div class="card">
+    <div class="card-header c2"><span class="dot"></span> &amp;kp key codes</div>
+    <div class="card-body">
+      <p class="section-title">letters / numbers</p>
+      <table>
+        <tr><td><span class="code yellow">A–Z</span></td><td class="desc">letter keys</td></tr>
+        <tr><td><span class="code yellow">N0–N9</span></td><td class="desc">number row 0–9</td></tr>
+        <tr><td><span class="code yellow">KP_N0–KP_N9</span></td><td class="desc">numpad 0–9</td></tr>
+      </table>
+      <p class="section-title">modifiers</p>
+      <table>
+        <tr><td><span class="code yellow">LSHIFT / RSHIFT</span></td><td class="desc">left / right shift</td></tr>
+        <tr><td><span class="code yellow">LCTRL / RCTRL</span></td><td class="desc">left / right ctrl</td></tr>
+        <tr><td><span class="code yellow">LALT / RALT</span></td><td class="desc">left / right alt</td></tr>
+        <tr><td><span class="code yellow">LGUI / RGUI</span></td><td class="desc">left / right gui (win/cmd)</td></tr>
+      </table>
+      <p class="section-title">common keys</p>
+      <table>
+        <tr><td><span class="code yellow">RET / ENTER</span></td><td class="desc">return / enter</td></tr>
+        <tr><td><span class="code yellow">BSPC</span></td><td class="desc">backspace</td></tr>
+        <tr><td><span class="code yellow">DEL</span></td><td class="desc">delete</td></tr>
+        <tr><td><span class="code yellow">TAB</span></td><td class="desc">tab</td></tr>
+        <tr><td><span class="code yellow">ESC</span></td><td class="desc">escape</td></tr>
+        <tr><td><span class="code yellow">SPACE / SPC</span></td><td class="desc">space</td></tr>
+        <tr><td><span class="code yellow">CAPS</span></td><td class="desc">caps lock</td></tr>
+      </table>
+      <p class="section-title">navigation</p>
+      <table>
+        <tr><td><span class="code yellow">LEFT RIGHT UP DOWN</span></td><td class="desc">arrow keys</td></tr>
+        <tr><td><span class="code yellow">HOME / END</span></td><td class="desc">home / end</td></tr>
+        <tr><td><span class="code yellow">PG_UP / PG_DN</span></td><td class="desc">page up / down</td></tr>
+        <tr><td><span class="code yellow">INS</span></td><td class="desc">insert</td></tr>
+      </table>
+      <p class="section-title">function keys</p>
+      <table>
+        <tr><td><span class="code yellow">F1–F24</span></td><td class="desc">function keys</td></tr>
+      </table>
+      <p class="section-title">symbols (use with &amp;kp)</p>
+      <div class="two-col">
+        <table>
+          <tr><td><span class="code yellow">EXCL</span></td><td class="desc">!</td></tr>
+          <tr><td><span class="code yellow">AT</span></td><td class="desc">@</td></tr>
+          <tr><td><span class="code yellow">HASH</span></td><td class="desc">#</td></tr>
+          <tr><td><span class="code yellow">DLLR</span></td><td class="desc">$</td></tr>
+          <tr><td><span class="code yellow">PRCNT</span></td><td class="desc">%</td></tr>
+          <tr><td><span class="code yellow">CARET</span></td><td class="desc">^</td></tr>
+          <tr><td><span class="code yellow">AMPS</span></td><td class="desc">&</td></tr>
+          <tr><td><span class="code yellow">ASTRK</span></td><td class="desc">*</td></tr>
+          <tr><td><span class="code yellow">LPAR / RPAR</span></td><td class="desc">( )</td></tr>
+        </table>
+        <table>
+          <tr><td><span class="code yellow">MINUS</span></td><td class="desc">-</td></tr>
+          <tr><td><span class="code yellow">EQUAL</span></td><td class="desc">=</td></tr>
+          <tr><td><span class="code yellow">UNDER</span></td><td class="desc">_</td></tr>
+          <tr><td><span class="code yellow">PLUS</span></td><td class="desc">+</td></tr>
+          <tr><td><span class="code yellow">LBKT / RBKT</span></td><td class="desc">[ ]</td></tr>
+          <tr><td><span class="code yellow">LBRC / RBRC</span></td><td class="desc">{ }</td></tr>
+          <tr><td><span class="code yellow">BSLH</span></td><td class="desc">\</td></tr>
+          <tr><td><span class="code yellow">PIPE</span></td><td class="desc">|</td></tr>
+          <tr><td><span class="code yellow">SEMI / COLON</span></td><td class="desc">; :</td></tr>
+          <tr><td><span class="code yellow">SQT / DQT</span></td><td class="desc">' "</td></tr>
+          <tr><td><span class="code yellow">GRAVE / TILDE</span></td><td class="desc">` ~</td></tr>
+          <tr><td><span class="code yellow">COMMA / DOT</span></td><td class="desc">, .</td></tr>
+          <tr><td><span class="code yellow">FSLH / QMARK</span></td><td class="desc">/ ?</td></tr>
+        </table>
+      </div>
+      <p class="section-title">media</p>
+      <table>
+        <tr><td><span class="code yellow">C_MUTE</span></td><td class="desc">mute</td></tr>
+        <tr><td><span class="code yellow">C_VOLUME_UP / DOWN</span></td><td class="desc">volume</td></tr>
+        <tr><td><span class="code yellow">C_PP</span></td><td class="desc">play / pause</td></tr>
+        <tr><td><span class="code yellow">C_NEXT / C_PREV</span></td><td class="desc">next / prev track</td></tr>
+        <tr><td><span class="code yellow">C_BRI_UP / DN</span></td><td class="desc">screen brightness</td></tr>
+      </table>
+      <p class="section-title">system</p>
+      <table>
+        <tr><td><span class="code yellow">PRINTSCREEN</span></td><td class="desc">print screen</td></tr>
+        <tr><td><span class="code yellow">SCROLLLOCK</span></td><td class="desc">scroll lock</td></tr>
+        <tr><td><span class="code yellow">PAUSE_BREAK</span></td><td class="desc">pause / break</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- MOD-TAP -->
+  <div class="card">
+    <div class="card-header c5"><span class="dot"></span> mod-tap &amp;mt</div>
+    <div class="card-body">
+      <p class="desc" style="color:var(--muted);font-size:12px;margin-bottom:8px;">tap = key, hold = modifier. useful for home row mods.</p>
+      <p class="section-title">syntax</p>
+      <div class="codeblock"><span class="kw">&amp;mt</span> <span class="val">MOD KEY</span>
+
+<span class="cm">// examples</span>
+<span class="kw">&amp;mt</span> <span class="val">LSHIFT A</span>       <span class="cm">// tap=a, hold=lshift</span>
+<span class="kw">&amp;mt</span> <span class="val">LCTRL ESC</span>     <span class="cm">// tap=esc, hold=lctrl</span>
+<span class="kw">&amp;mt</span> <span class="val">LGUI SPACE</span>    <span class="cm">// tap=space, hold=lgui</span></div>
+      <p class="section-title">modifier codes</p>
+      <table>
+        <tr><td><span class="code orange">LSHIFT / RSHIFT</span></td><td class="desc">shift</td></tr>
+        <tr><td><span class="code orange">LCTRL / RCTRL</span></td><td class="desc">ctrl</td></tr>
+        <tr><td><span class="code orange">LALT / RALT</span></td><td class="desc">alt</td></tr>
+        <tr><td><span class="code orange">LGUI / RGUI</span></td><td class="desc">gui / cmd / win</td></tr>
+      </table>
+      <div class="warn">⚠ home row mods need tuning — set tapping-term-ms to avoid misfires. typical range: 175–250ms.</div>
+    </div>
+  </div>
+
+  <!-- LAYER-TAP -->
+  <div class="card">
+    <div class="card-header c4"><span class="dot"></span> layer-tap &amp;lt</div>
+    <div class="card-body">
+      <p class="section-title">syntax</p>
+      <div class="codeblock"><span class="kw">&amp;lt</span> <span class="val">LAYER KEY</span>
+
+<span class="cm">// examples</span>
+<span class="kw">&amp;lt</span> <span class="val">1 SPACE</span>    <span class="cm">// tap=space, hold=layer 1</span>
+<span class="kw">&amp;lt</span> <span class="val">2 BSPC</span>    <span class="cm">// tap=bspc, hold=layer 2</span>
+<span class="kw">&amp;lt</span> <span class="val">3 RET</span>     <span class="cm">// tap=enter, hold=layer 3</span></div>
+      <div class="note">layer numbers match the order they appear in your keymap { } block. first = 0.</div>
+    </div>
+  </div>
+
+  <!-- TAP DANCE -->
+  <div class="card">
+    <div class="card-header c3"><span class="dot"></span> tap dance &amp;td</div>
+    <div class="card-body">
+      <p class="desc" style="color:var(--muted);font-size:12px;margin-bottom:8px;">different action based on number of taps.</p>
+      <p class="section-title">define in behaviors { }</p>
+      <div class="codeblock"><span class="fn">td0</span>: <span class="fn">td0</span> {
+  compatible = <span class="str">"zmk,behavior-tap-dance"</span>;
+  #binding-cells = <span class="val">&lt;0&gt;</span>;
+  tapping-term-ms = <span class="val">&lt;200&gt;</span>;     <span class="cm">// optional</span>
+  bindings = <span class="val">&lt;&amp;kp LSHIFT&gt;</span>, <span class="val">&lt;&amp;kp CAPS&gt;</span>;
+  <span class="cm">// tap 1 = lshift, tap 2 = caps</span>
+};</div>
+      <p class="section-title">use in keymap</p>
+      <div class="codeblock"><span class="kw">&amp;td0</span>   <span class="cm">// reference by name</span></div>
+      <div class="note">you can add more bindings for triple-tap, quad-tap etc.</div>
+    </div>
+  </div>
+
+  <!-- COMBOS -->
+  <div class="card">
+    <div class="card-header c6"><span class="dot"></span> combos</div>
+    <div class="card-body">
+      <p class="desc" style="color:var(--muted);font-size:12px;margin-bottom:8px;">trigger a key or behavior when multiple keys are pressed together.</p>
+      <p class="section-title">syntax — add inside / { }</p>
+      <div class="codeblock">combos {
+  compatible = <span class="str">"zmk,combos"</span>;
+
+  <span class="fn">combo_name</span> {
+    bindings = <span class="val">&lt;&amp;kp ESC&gt;</span>;
+    key-positions = <span class="val">&lt;0 1&gt;</span>;
+    timeout-ms = <span class="val">&lt;50&gt;</span>;         <span class="cm">// optional, default 50</span>
+    layers = <span class="val">&lt;0 1&gt;</span>;             <span class="cm">// optional, all layers if omitted</span>
+    require-prior-idle-ms = <span class="val">&lt;150&gt;</span>; <span class="cm">// optional</span>
+  };
+};</div>
+      <p class="section-title">key-positions</p>
+      <p class="desc" style="font-size:12px;color:var(--muted);">positions are numbered left-to-right, top-to-bottom starting at 0. check your board's matrix for exact numbers.</p>
+      <p class="section-title">useful combo bindings</p>
+      <table>
+        <tr><td><span class="code green">&amp;kp ESC</span></td><td class="desc">send a keycode</td></tr>
+        <tr><td><span class="code green">&amp;bootloader</span></td><td class="desc">enter bootloader</td></tr>
+        <tr><td><span class="code green">&amp;soft_off</span></td><td class="desc">power off</td></tr>
+        <tr><td><span class="code green">&amp;mo 1</span></td><td class="desc">activate layer</td></tr>
+        <tr><td><span class="code green">&amp;caps_word</span></td><td class="desc">caps word</td></tr>
+      </table>
+      <div class="warn">⚠ timeout-ms too high = accidental triggers. too low = hard to hit intentionally. 40–60ms is a good start.</div>
+    </div>
+  </div>
+
+  <!-- BLUETOOTH -->
+  <div class="card">
+    <div class="card-header c7"><span class="dot"></span> bluetooth bindings</div>
+    <div class="card-body">
+      <p class="section-title">requires #include &lt;dt-bindings/zmk/bt.h&gt;</p>
+      <table>
+        <tr><td><span class="code yellow">&amp;bt BT_SEL 0</span></td><td class="desc">select profile 0 (0–4)</td></tr>
+        <tr><td><span class="code yellow">&amp;bt BT_CLR</span></td><td class="desc">clear current profile pairing</td></tr>
+        <tr><td><span class="code yellow">&amp;bt BT_CLR_ALL</span></td><td class="desc">clear all profiles</td></tr>
+        <tr><td><span class="code yellow">&amp;bt BT_NXT</span></td><td class="desc">next profile</td></tr>
+        <tr><td><span class="code yellow">&amp;bt BT_PRV</span></td><td class="desc">previous profile</td></tr>
+        <tr><td><span class="code yellow">&amp;out OUT_USB</span></td><td class="desc">force usb output</td></tr>
+        <tr><td><span class="code yellow">&amp;out OUT_BLE</span></td><td class="desc">force ble output</td></tr>
+        <tr><td><span class="code yellow">&amp;out OUT_TOG</span></td><td class="desc">toggle usb / ble</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- RGB -->
+  <div class="card">
+    <div class="card-header c8"><span class="dot"></span> rgb bindings</div>
+    <div class="card-body">
+      <p class="section-title">requires #include &lt;dt-bindings/zmk/rgb.h&gt;</p>
+      <table>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_ON</span></td><td class="desc">turn rgb on</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_OFF</span></td><td class="desc">turn rgb off</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_TOG</span></td><td class="desc">toggle rgb</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_EFF</span></td><td class="desc">next effect</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_EFR</span></td><td class="desc">previous effect</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_BRI</span></td><td class="desc">brightness up</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_BRD</span></td><td class="desc">brightness down</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_SPI</span></td><td class="desc">speed increase</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_SPD</span></td><td class="desc">speed decrease</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_HUI</span></td><td class="desc">hue increase</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_HUD</span></td><td class="desc">hue decrease</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_SAI</span></td><td class="desc">saturation increase</td></tr>
+        <tr><td><span class="code pink">&amp;rgb_ug RGB_SAD</span></td><td class="desc">saturation decrease</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- MOUSE -->
+  <div class="card">
+    <div class="card-header c1"><span class="dot"></span> mouse / pointing bindings</div>
+    <div class="card-body">
+      <p class="section-title">requires #include &lt;dt-bindings/zmk/pointing.h&gt;</p>
+      <table>
+        <tr><td><span class="code">&amp;mmv MOVE_UP</span></td><td class="desc">move cursor up</td></tr>
+        <tr><td><span class="code">&amp;mmv MOVE_DOWN</span></td><td class="desc">move cursor down</td></tr>
+        <tr><td><span class="code">&amp;mmv MOVE_LEFT</span></td><td class="desc">move cursor left</td></tr>
+        <tr><td><span class="code">&amp;mmv MOVE_RIGHT</span></td><td class="desc">move cursor right</td></tr>
+        <tr><td><span class="code">&amp;msc SCRL_UP</span></td><td class="desc">scroll up</td></tr>
+        <tr><td><span class="code">&amp;msc SCRL_DOWN</span></td><td class="desc">scroll down</td></tr>
+        <tr><td><span class="code">&amp;msc SCRL_LEFT</span></td><td class="desc">scroll left</td></tr>
+        <tr><td><span class="code">&amp;msc SCRL_RIGHT</span></td><td class="desc">scroll right</td></tr>
+        <tr><td><span class="code">&amp;mkp LCLK</span></td><td class="desc">left click</td></tr>
+        <tr><td><span class="code">&amp;mkp RCLK</span></td><td class="desc">right click</td></tr>
+        <tr><td><span class="code">&amp;mkp MCLK</span></td><td class="desc">middle click</td></tr>
+        <tr><td><span class="code">&amp;mkp MB4</span></td><td class="desc">mouse button 4</td></tr>
+        <tr><td><span class="code">&amp;mkp MB5</span></td><td class="desc">mouse button 5</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- LAYER STRUCTURE -->
+  <div class="card full">
+    <div class="card-header c2"><span class="dot"></span> layer structure — how to add a layer</div>
+    <div class="card-body">
+      <div class="codeblock">keymap {
+  compatible = <span class="str">"zmk,keymap"</span>;
+
+  <span class="fn">default_layer</span> {           <span class="cm">// layer 0</span>
+    display-name = <span class="str">"base"</span>;
+    bindings = &lt;
+      <span class="kw">&amp;kp TAB</span>  <span class="kw">&amp;kp Q</span>  ...  <span class="cm">// fill all positions</span>
+    &gt;;
+  };
+
+  <span class="fn">lower_layer</span> {             <span class="cm">// layer 1</span>
+    display-name = <span class="str">"lower"</span>;
+    bindings = &lt;
+      <span class="kw">&amp;trans</span>  <span class="kw">&amp;kp N1</span>  ...  <span class="cm">// &amp;trans = pass through</span>
+    &gt;;
+  };
+
+  <span class="fn">my_new_layer</span> {            <span class="cm">// layer 2 — just add another block</span>
+    display-name = <span class="str">"extra"</span>;
+    bindings = &lt;
+      <span class="kw">&amp;none</span>  <span class="kw">&amp;kp F1</span>  ...  <span class="cm">// &amp;none = block key entirely</span>
+    &gt;;
+  };
+};</div>
+      <div class="note">layer numbers are assigned in order of appearance — 0, 1, 2... rename the node freely, the number is positional.</div>
+    </div>
+  </div>
+
+  <!-- GLOBAL SETTINGS -->
+  <div class="card full">
+    <div class="card-header c5"><span class="dot"></span> global behavior settings</div>
+    <div class="card-body">
+      <div class="codeblock"><span class="cm">// put these at the top level, before / { }</span>
+
+<span class="fn">&amp;lt</span> {
+  tapping-term-ms = <span class="val">&lt;200&gt;</span>;    <span class="cm">// how long hold takes to activate layer. default 200</span>
+  quick-tap-ms = <span class="val">&lt;150&gt;</span>;      <span class="cm">// tap then hold = repeat key instead of layer</span>
+  flavor = <span class="str">"balanced"</span>;       <span class="cm">// "hold-preferred" | "tap-preferred" | "balanced" | "tap-unless-interrupted"</span>
+};
+
+<span class="fn">&amp;mt</span> {
+  tapping-term-ms = <span class="val">&lt;200&gt;</span>;
+  flavor = <span class="str">"tap-preferred"</span>;   <span class="cm">// usually best for home row mods</span>
+};
+
+<span class="fn">&amp;sk</span> {
+  release-after-ms = <span class="val">&lt;1000&gt;</span>; <span class="cm">// how long sticky key waits</span>
+  quick-release;              <span class="cm">// release on next key-up instead of next key-down</span>
+};
+
+<span class="fn">&amp;soft_off</span> {
+  hold-time-ms = <span class="val">&lt;2000&gt;</span>;     <span class="cm">// hold duration before powering off</span>
+};</div>
+    </div>
+  </div>
+
+  <!-- REQUIRED INCLUDES -->
+  <div class="card">
+    <div class="card-header c4"><span class="dot"></span> required includes</div>
+    <div class="card-body">
+      <table>
+        <tr><td><span class="code purple">&lt;behaviors.dtsi&gt;</span></td><td class="desc">core behaviors (&amp;kp, &amp;mo, etc.)</td></tr>
+        <tr><td><span class="code purple">&lt;dt-bindings/zmk/keys.h&gt;</span></td><td class="desc">key codes (A, B, LSHIFT…)</td></tr>
+        <tr><td><span class="code purple">&lt;dt-bindings/zmk/bt.h&gt;</span></td><td class="desc">bluetooth bindings</td></tr>
+        <tr><td><span class="code purple">&lt;dt-bindings/zmk/outputs.h&gt;</span></td><td class="desc">output selection (usb/ble)</td></tr>
+        <tr><td><span class="code purple">&lt;dt-bindings/zmk/rgb.h&gt;</span></td><td class="desc">rgb underglow</td></tr>
+        <tr><td><span class="code purple">&lt;dt-bindings/zmk/pointing.h&gt;</span></td><td class="desc">mouse / pointing</td></tr>
+        <tr><td><span class="code purple">&lt;input/processors.dtsi&gt;</span></td><td class="desc">input processors (scalers etc.)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="card">
+    <div class="card-header c6"><span class="dot"></span> quick tips</div>
+    <div class="card-body">
+      <table>
+        <tr><td><span class="code green">&amp;trans</span></td><td class="desc">always use on keys you don't want to redefine — lets the layer below through</td></tr>
+        <tr><td><span class="code green">&amp;none</span></td><td class="desc">use to intentionally block a key on a layer so nothing fires</td></tr>
+        <tr><td><span class="code green">display-name</span></td><td class="desc">shows on oled / zmk studio — keep it short (1–8 chars)</td></tr>
+        <tr><td><span class="code green">key count</span></td><td class="desc">every layer must have exactly the same number of bindings as your physical key count</td></tr>
+        <tr><td><span class="code green">build</span></td><td class="desc">push to github → actions tab → wait for build → download firmware zip</td></tr>
+        <tr><td><span class="code green">flash</span></td><td class="desc">double-tap reset → board appears as usb drive → drag .uf2 file onto it</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  zmk editing reference — based on zmk firmware docs
+</footer>
+
+</body>
+</html>
