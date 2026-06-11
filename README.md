@@ -1,6 +1,8 @@
-> [!CAUTION]
-> pr0bably does not work.
+> [!NOTE]
+> so works
 # (Eyelash Peripherals) Corne ZMK Repository
+
+## read more about me [here](eyelash_corne.md)
 
 ![Photo of Eyelash Peripherals Corne](https://ae01.alicdn.com/kf/Sa797fee25edd44248fbfdb0e13d44e00B.jpg)
 
