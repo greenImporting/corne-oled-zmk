@@ -1,5 +1,5 @@
 > [!NOTE]
-> so works
+> so doesn't work
 # (Eyelash Peripherals) Corne ZMK Repository
 
 ## read more about me [here](eyelash_corne.md)
