@@ -43,8 +43,8 @@ layers:
   - {t: ;, s: ':'}
   - {t: ',', s: <}
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: '1', s: '!'}
-  - {t: '2', s: '@'}
+  - {t: .!, h: toggle}
+  - {t: '!!', h: toggle}
   - R
   - $$mdi:keyboard-space$$
   - $$mdi:keyboard-space$$
