@@ -43,8 +43,8 @@ layers:
   - {t: ;, s: ':'}
   - {t: ',', s: <}
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: .!, h: toggle}
-  - {t: '!!', h: toggle}
+  - .!
+  - '!!'
   - R
   - $$mdi:keyboard-space$$
   - $$mdi:keyboard-space$$
@@ -92,7 +92,7 @@ layers:
   - '}'
   - '|'
   - '~'
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {type: held}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:keyboard-space$$
   - {t: '$$mdi:keyboard-return$$', type: enter}
@@ -142,7 +142,7 @@ layers:
   - END
   - PG DN
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {type: held}
   - {t: '$$mdi:transfer$$', type: trans}
   - INS
   - $$mdi:keyboard-space$$
