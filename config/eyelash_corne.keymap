@@ -67,10 +67,10 @@
         mid {
             display-name = "..";
             bindings = <
-&kp TAB    &kp B  &kp F  &kp L   &kp K   &kp Q                       &kp UP               &kp P      &kp G      &kp O     &kp U     &kp DOT    &kp BSPC
-&kp LSHFT  &kp N  &kp S  &kp H   &kp T   &kp M             &kp LEFT  &kp LGUI  &kp RIGHT  &kp Y      &kp C      &kp A     &kp E     &kp I      &kp MINUS
-&kp LCTRL  &kp X  &kp V  &kp J   &kp D   &kp Z  &kp ESC              &kp DOWN             &kp SQT    &kp W      &kp FSLH  &kp SEMI  &kp COMMA  &kp RET
-                         &kp N1  &kp N2  &kp R                                            &kp SPACE  &kp SPACE  &kp LGUI
+&kp TAB    &kp B  &kp F  &kp L  &kp K  &kp Q                       &kp UP               &kp P      &kp G      &kp O     &kp U     &kp DOT    &kp BSPC
+&kp LSHFT  &kp N  &kp S  &kp H  &kp T  &kp M             &kp LEFT  &kp LGUI  &kp RIGHT  &kp Y      &kp C      &kp A     &kp E     &kp I      &kp MINUS
+&kp LCTRL  &kp X  &kp V  &kp J  &kp D  &kp Z  &kp ESC              &kp DOWN             &kp SQT    &kp W      &kp FSLH  &kp SEMI  &kp COMMA  &kp RET
+                         &to 1  &to 2  &kp R                                            &kp SPACE  &kp SPACE  &kp LGUI
             >;
 
             sensor-bindings = <&rsr_vol &rsr_trans>;
