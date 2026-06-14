@@ -2,103 +2,54 @@ layout: {zmk_keyboard: eyelash_corne}
 layers:
   ..:
   - $$mdi:keyboard-tab$$
+  - B
+  - F
+  - L
+  - K
   - Q
-  - W
-  - E
-  - R
-  - T
   - $$mdi:arrow-up-bold$$
-  - Y
-  - U
-  - I
-  - O
   - P
+  - G
+  - O
+  - U
+  - {t: ., s: '>'}
   - {t: '$$mdi:backspace$$', type: backspace}
   - $$mdi:apple-keyboard-shift$$
-  - A
+  - N
   - S
-  - D
-  - F
-  - G
-  - $$mdi:arrow-left-bold$$
-  - {t: '$$mdi:keyboard-return$$', type: enter}
-  - $$mdi:arrow-right-bold$$
   - H
-  - J
-  - K
-  - L
-  - {t: ;, s: ':'}
-  - {t: '''', s: '"'}
-  - $$mdi:apple-keyboard-control$$
-  - Z
-  - X
+  - T
+  - M
+  - $$mdi:arrow-left-bold$$
+  - LGUI
+  - $$mdi:arrow-right-bold$$
+  - Y
   - C
+  - A
+  - E
+  - I
+  - {t: '-', s: _}
+  - $$mdi:apple-keyboard-control$$
+  - X
   - V
-  - B
+  - J
+  - D
+  - Z
   - $$mdi:keyboard-esc$$
   - $$mdi:arrow-down-bold$$
-  - N
-  - M
-  - {t: ',', s: <}
-  - {t: ., s: '>'}
+  - {t: '''', s: '"'}
+  - W
   - {t: /, s: '?'}
+  - {t: ;, s: ':'}
+  - {t: ',', s: <}
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - .!
-  - '!!'
-  - LGUI
-  - $$mdi:keyboard-space$$
-  - $$mdi:keyboard-space$$
-  - $$mdi:apple-keyboard-option$$
-  .!:
-  - $$mdi:keyboard-esc$$
   - {t: '1', s: '!'}
   - {t: '2', s: '@'}
-  - {t: '3', s: '#'}
-  - {t: '4', s: $}
-  - {t: '5', s: '%'}
-  - {t: '$$mdi:menu-up$$', s: '$$mdi:mouse$$'}
-  - {t: '6', s: ^}
-  - {t: '7', s: '&'}
-  - {t: '8', s: '*'}
-  - {t: '9', s: (}
-  - {t: '0', s: )}
-  - {t: '$$mdi:backspace$$', type: backspace}
-  - $$mdi:apple-keyboard-shift$$
-  - BT CLR ALL
-  - {h: '1', s: '$$mdi:bluetooth-connect$$'}
-  - {h: '2', s: '$$mdi:bluetooth-connect$$'}
-  - {h: '3', s: '$$mdi:bluetooth-connect$$'}
-  - {h: '4', s: '$$mdi:bluetooth-connect$$'}
-  - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
-  - $$mdi:mouse-left-click-outline$$
-  - {t: '$$mdi:menu-right$$', s: '$$mdi:mouse$$'}
-  - {t: '-', s: _}
-  - {t: '=', s: +}
-  - {t: '[', s: '{'}
-  - {t: ']', s: '}'}
-  - {t: \, s: '|'}
-  - PG UP
-  - $$mdi:apple-keyboard-control$$
-  - RGB OFF
-  - RGB ON
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - RGB EFF
-  - $$mdi:volume-off$$
-  - {t: '$$mdi:menu-down$$', s: '$$mdi:mouse$$'}
-  - RGB EFR
-  - RGB SPI
-  - RGB BRI
-  - RGB BRD
-  - END
-  - PG DN
-  - {type: held}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - INS
-  - $$mdi:backspace-reverse-outline$$
-  - {t: '$$mdi:transfer$$', type: trans}
-  '!!':
+  - R
+  - $$mdi:keyboard-space$$
+  - $$mdi:keyboard-space$$
+  - LGUI
+  .!:
   - $$mdi:keyboard-esc$$
   - F1
   - F2
@@ -142,10 +93,59 @@ layers:
   - '|'
   - '~'
   - {t: '$$mdi:transfer$$', type: trans}
-  - {type: held}
+  - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:keyboard-space$$
   - {t: '$$mdi:keyboard-return$$', type: enter}
+  - $$mdi:keyboard-space$$
+  - $$mdi:keyboard-tab$$
+  '!!':
+  - $$mdi:keyboard-esc$$
+  - {h: '$$mdi:arrow-down-bold$$', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '$$mdi:arrow-up-bold$$', s: '$$mdi:bluetooth-connect$$'}
+  - RGB TOG
+  - RGB COLOR HSB(329,88,48)
+  - RGB EFF
+  - {t: '$$mdi:menu-up$$', s: '$$mdi:mouse$$'}
+  - H
+  - J
+  - K
+  - L
+  - $$mdi:keyboard-esc$$
+  - {t: '$$mdi:backspace$$', type: backspace}
+  - $$mdi:apple-keyboard-shift$$
+  - {t: '1', s: '!'}
+  - {t: '2', s: '@'}
+  - {t: '3', s: '#'}
+  - {t: '4', s: $}
+  - {t: '5', s: '%'}
+  - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
+  - $$mdi:mouse-left-click-outline$$
+  - {t: '$$mdi:menu-right$$', s: '$$mdi:mouse$$'}
+  - {t: '6', s: ^}
+  - {t: '7', s: '&'}
+  - {t: '8', s: '*'}
+  - {t: '9', s: (}
+  - {t: '0', s: )}
+  - PG UP
+  - $$mdi:apple-keyboard-control$$
+  - RGB OFF
+  - RGB ON
   - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - RGB EFF
+  - $$mdi:volume-off$$
+  - {t: '$$mdi:menu-down$$', s: '$$mdi:mouse$$'}
+  - PLAY PAUSE
+  - PREVIOUS
+  - $$mdi:skip-next$$
+  - PRINTSCREEN
+  - END
+  - PG DN
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - INS
+  - $$mdi:keyboard-space$$
   - {t: '$$mdi:transfer$$', type: trans}
 combos:
 - p: [1, 15, 29]
